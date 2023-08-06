@@ -12,6 +12,8 @@ class TaskBloc extends HydratedBloc<TaskEvent, TaskState> {
     on<DeleteTask>(
         _onDeleteTask); // these lines register event handler functions. this is used to  map each even type to specific handler function.
     on<Removetask>(_onRemoveTask);
+    on<MarkTaskFavoriteOrUnFavorite>(_onMarkFavoriteOrUnfavoriteTask);
+    on<EditTask>(_onEditTask);
   }
 
   //this is an event handler function for the addTask  when an addTask event is dispathced this function is called to  update the state of  the bloc
@@ -83,6 +85,69 @@ class TaskBloc extends HydratedBloc<TaskEvent, TaskState> {
           ..add(
             event.task.copyWith(isDeleted: true),
           ),
+      ),
+    );
+  }
+
+  void _onMarkFavoriteOrUnfavoriteTask(
+      MarkTaskFavoriteOrUnFavorite event, Emitter<TaskState> emit) {
+    final state = this.state;
+    List<Task> pendingTasks = state.pendingTasks;
+    List<Task> completedTasks = state.completedTasks;
+    List<Task> favoriteTasks = state.favoriteTasks;
+    if (event.task.isDone == false) {
+      if (event.task.isFavorite == false) {
+        var taskIndex = pendingTasks.indexOf(event.task);
+        pendingTasks = List.from(pendingTasks)
+          ..remove(event.task)
+          ..insert(taskIndex, event.task.copyWith(isFavorite: true));
+        favoriteTasks.insert(0, event.task.copyWith(isFavorite: true));
+      } else {
+        var taskIndex = pendingTasks.indexOf(event.task);
+        pendingTasks = List.from(pendingTasks)
+          ..remove(event.task)
+          ..insert(taskIndex, event.task.copyWith(isFavorite: false));
+        favoriteTasks.remove(event.task);
+      }
+    } else {
+      if (event.task.isFavorite == false) {
+        var taskIndex = completedTasks.indexOf(event.task);
+        completedTasks = List.from(completedTasks)
+          ..remove(event.task)
+          ..insert(taskIndex, event.task.copyWith(isFavorite: true));
+        favoriteTasks.insert(0, event.task.copyWith(isFavorite: true));
+      } else {
+        var taskIndex = completedTasks.indexOf(event.task);
+        completedTasks = List.from(completedTasks)
+          ..remove(event.task)
+          ..insert(taskIndex, event.task.copyWith(isFavorite: false));
+        favoriteTasks.remove(event.task);
+      }
+    }
+    emit(TaskState(
+      pendingTasks: pendingTasks,
+      completedTasks: completedTasks,
+      favoriteTasks: favoriteTasks,
+      removedTasks: state.removedTasks,
+    ));
+  }
+
+  void _onEditTask(EditTask event, Emitter<TaskState> emit) {
+    final state = this.state;
+    List<Task> favouriteTasks = state.favoriteTasks;
+    if (event.oldTask.isFavorite == true) {
+      favouriteTasks
+        ..remove(event.oldTask)
+        ..insert(0, event.newTask);
+    }
+    emit(
+      TaskState(
+        pendingTasks: List.from(state.pendingTasks)
+          ..remove(event.oldTask)
+          ..insert(0, event.newTask),
+        completedTasks: state.completedTasks..remove(event.oldTask),
+        favoriteTasks: favouriteTasks,
+        removedTasks: state.removedTasks,
       ),
     );
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:task_app/blocs/bolc_exports.dart';
 import 'package:task_app/screens/tabs_screen.dart';
-import 'package:task_app/screens/task_screen.dart';
 import 'package:task_app/services/app_router.dart';
 import 'package:task_app/services/app_theme.dart';
 
@@ -33,14 +32,13 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocBuilder<SwitchBloc, SwitchState>(
         builder: (context, state) {
-          print(state.switchValue.toString());
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Flutter Task App',
             theme: state.switchValue
                 ? AppThemes.appThemeData[AppTheme.darkTheme]
                 : AppThemes.appThemeData[AppTheme.lightTheme],
-            home: TabScreen(),
+            home: const TabScreen(),
             onGenerateRoute: appRouter.ongenerateRoute,
           );
         },

@@ -15,12 +15,12 @@ class RecycleBin extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text('Recycle Bin'),
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.add),
-              )
-            ],
+            // actions: [
+            //   IconButton(
+            //     onPressed: () {},
+            //     icon: const Icon(Icons.add),
+            //   )
+            // ],
           ),
           drawer: const MyDrawer(),
           body: Column(
@@ -35,11 +35,11 @@ class RecycleBin extends StatelessWidget {
               )
             ],
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            tooltip: 'Add task',
-            child: const Icon(Icons.add),
-          ),
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () {},
+          //   tooltip: 'Add task',
+          //   child: const Icon(Icons.add),
+          // ),
         );
       },
     );
