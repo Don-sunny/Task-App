@@ -34,7 +34,8 @@ class _MyDrawerState extends State<MyDrawer> {
                   child: ListTile(
                     leading: const Icon(Icons.folder_special),
                     title: const Text('My Tasks'),
-                    trailing: Text('${state.pendingTasks.length}'),
+                    trailing: Text(
+                        '${state.pendingTasks.length} | ${state.completedTasks.length}'),
                   ),
                 );
               },

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_app/screens/recycle_bin.dart';
 import 'package:task_app/screens/tabs_screen.dart';
-import 'package:task_app/screens/task_screen.dart';
 
 class AppRouter {
   Route? ongenerateRoute(RouteSettings routeSettings) {
