@@ -9,9 +9,13 @@ class TaskBloc extends HydratedBloc<TaskEvent, TaskState> {
   TaskBloc() : super(const TaskState()) {
     on<AddTask>(_onAddTask);
     on<UpdateTask>(_onUpdateTask);
-    on<DeleteTask>(_onDeleteTask);
+    on<DeleteTask>(
+        _onDeleteTask); // these lines register event handler functions. this is used to  map each even type to specific handler function.
     on<Removetask>(_onRemoveTask);
   }
+
+  //this is an event handler function for the addTask  when an addTask event is dispathced this function is called to  update the state of  the bloc
+  // it takes two argument 'event' which is the specific event object,and 'emit' which is a function provided by the bloc library to emit new  state.
 
   void _onAddTask(AddTask event, Emitter<TaskState> emit) {
     final state = this.state;

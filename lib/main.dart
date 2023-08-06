@@ -3,6 +3,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:task_app/blocs/bolc_exports.dart';
 import 'package:task_app/screens/task_screen.dart';
 import 'package:task_app/services/app_router.dart';
+import 'package:task_app/services/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,17 +21,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TaskBloc(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Task App',
-        theme: ThemeData(
-          useMaterial3: false,
-          primarySwatch: Colors.blue,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => TaskBloc(),
         ),
-        home: const TaskScreen(),
-        onGenerateRoute: appRouter.ongenerateRoute,
+        BlocProvider(
+          create: (context) => SwitchBloc(),
+        )
+      ],
+      child: BlocBuilder<SwitchBloc, SwitchState>(
+        builder: (context, state) {
+          print(state.switchValue.toString());
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Task App',
+            theme: state.switchValue
+                ? AppThemes.appThemeData[AppTheme.darkTheme]
+                : AppThemes.appThemeData[AppTheme.lightTheme],
+            home: const TaskScreen(),
+            onGenerateRoute: appRouter.ongenerateRoute,
+          );
+        },
       ),
     );
   }
