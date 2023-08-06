@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_app/blocs/bolc_exports.dart';
 import 'package:task_app/models/task.dart';
-import 'package:task_app/screens/my_drawer.dart';
 import 'package:task_app/widgets/task_list.dart';
 
 // ignore: must_be_immutable

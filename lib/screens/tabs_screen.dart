@@ -4,7 +4,6 @@ import 'package:task_app/screens/completed_task_screen.dart';
 import 'package:task_app/screens/favorite_task_screen.dart';
 import 'package:task_app/screens/my_drawer.dart';
 import 'package:task_app/screens/pending_task_screen.dart';
-import 'package:task_app/screens/task_screen.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
@@ -27,6 +26,7 @@ class _TabScreenState extends State<TabScreen> {
   void _addTask(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (context) => SingleChildScrollView(
         child: Container(
           padding:
