@@ -20,7 +20,6 @@ class TaskTile extends StatelessWidget {
   }
 
   void _editScreen(BuildContext context) {
-    print('Edit screen Called');
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -93,8 +92,12 @@ class TaskTile extends StatelessWidget {
                     .read<TaskBloc>()
                     .add(MarkTaskFavoriteOrUnFavorite(task: task)),
                 editTaskCallback: () {
+                  Navigator.of(context).pop();
                   _editScreen(context);
                 },
+                restoreTaskCallback: () => context.read<TaskBloc>().add(
+                      RestoreTask(task: task),
+                    ),
               )
             ],
           ),
